@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PC2_App.Pages.LoginPage"
+             Title="Login"
+             BackgroundImage="logo.jpg">
+    <ContentPage.Content>
+        <StackLayout Orientation="Vertical" Padding="30" Spacing="40">
+            <BoxView HeightRequest="10"/>
+            <Image HorizontalOptions="Center" WidthRequest="300" Source="maco.jpg"/>
+            <Frame BackgroundColor="#BF043055" HasShadow="False">
+                <StackLayout Orientation="Vertical" Spacing="10">
+                    <Entry x:Name="CPF" Text="{Binding CPF}" Placeholder="CPF" 
+                           PlaceholderColor="Black" HeightRequest="40" 
+                           Keyboard="Numeric"
+                           BackgroundColor="White"
+                           TextColor="Black"/>
+                    <Entry x:Name="SUS" Text="{Binding SUS}" Placeholder="SUS" 
+                           PlaceholderColor="Black" HeightRequest="40" 
+                           Keyboard="Numeric"
+                           IsPassword="False"
+                           BackgroundColor="White"
+                           TextColor="Black"/>
+                </StackLayout>
+            </Frame>
+            <Button Command="{Binding SubmitCommand}" Text="Entrar" TextColor="White"
+                    FontAttributes="Bold" FontSize="Medium" HorizontalOptions="FillAndExpand"
+                    BackgroundColor="#088da5" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
