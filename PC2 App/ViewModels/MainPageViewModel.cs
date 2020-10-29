@@ -1,4 +1,5 @@
 ﻿using PC2_App.Models;
+using PC2_App.Pages;
 using PC2_App.Util;
 using System;
 using System.Collections.Generic;
@@ -13,18 +14,35 @@ namespace PC2_App.ViewModels
 {
     public class MainPageViewModel : INotifyPropertyChanged
     {
+        private INavigation navigation;
+
+        public INavigation GetNavigation()
+        {
+            return navigation;
+        }
+
+        public void SetNavigation(INavigation value)
+        {
+            navigation = value;
+        }
+
         private bool atualizando;
 
         public event PropertyChangedEventHandler PropertyChanged = delegate { };
-        public Action ExibirAviso;
-        public Action ExibirSucesso;
-        public Action NavegarParaPaginaDoacao;
         public ICommand SearchTermChangedCommand => new Command<string>(SearchTermChanged);
         public ICommand SolicitarButtonPressCommand => new Command<int>(SolicitarButtonPress);
         public ICommand DoarButtonPressCommand => new Command<int>(DoarButtonPress);
         public ICommand RefreshCommand => new Command(Refresh);
+        public ICommand SairCommand => new Command(Sair);
         public List<Medicamentos> medicamentosPesquisa { get; set; }
         public List<Medicamentos> medicamentos { get; set; }
+
+        public MainPageViewModel(INavigation navigation)
+        {
+            this.SetNavigation(navigation);
+            Carregar();
+        }
+
 
         public bool Atualizando
         {
@@ -55,6 +73,12 @@ namespace PC2_App.ViewModels
             Carregar();
         }
 
+        private void Sair()
+        {
+            navigation.InsertPageBefore(new LoginPage(), this.navigation.NavigationStack[0]);
+            navigation.PopAsync();
+        }
+
         private void SolicitarButtonPress(int idMedicamento)
         {
             Solicitar(idMedicamento);
@@ -62,14 +86,10 @@ namespace PC2_App.ViewModels
 
         private void DoarButtonPress(int idMedicamento)
         {
-            Application.Current.Properties.Remove("idMedicamento");
-            Application.Current.Properties.Add("idMedicamento", idMedicamento);
-            NavegarParaPaginaDoacao();
-        }
-
-        public MainPageViewModel()
-        {
-            Carregar();
+            var medicamento = medicamentosPesquisa.Where(x => x.Id == idMedicamento).First();
+            Application.Current.Properties.Remove("Medicamento");
+            Application.Current.Properties.Add("Medicamento", medicamento);
+            navigation.PushAsync(new ContatoPage());
         }
 
         private async void Carregar()
@@ -94,9 +114,9 @@ namespace PC2_App.ViewModels
                     SearchTermChanged("");
                 }
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
-                ExibirAviso();
+                await ExibirAviso(ex.Message);
             }
         }
 
@@ -121,13 +141,23 @@ namespace PC2_App.ViewModels
 
                 if (entity != null)
                 {
-                    ExibirSucesso();
+                   await ExibirSucesso();
                 }
             }
             catch (Exception ex)
             {
-                ExibirAviso();
+                await ExibirAviso(ex.Message);
             }            
+        }
+
+        private async Task ExibirSucesso()
+        {
+            await this.navigation.NavigationStack[0].DisplayAlert("Sucesso", "Solicitação enviado com sucesso.", "OK");
+        }
+
+        private async Task ExibirAviso(string erro)
+        {
+            await this.navigation.NavigationStack[0].DisplayAlert("Erro", erro, "OK");
         }
     }
 }

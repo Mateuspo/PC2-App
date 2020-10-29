@@ -6,15 +6,41 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Util\Src\Atualizar.png" />
+    <None Remove="Util\Src\Atualizar2.png" />
     <None Remove="Util\Src\Falta.png" />
     <None Remove="Util\Src\Possui.png" />
+    <None Remove="Util\Src\Sair.png" />
+    <None Remove="Util\Src\Sair2.png" />
+    <None Remove="Util\Src\Whats.png" />
+    <None Remove="Util\Src\WhatsApp.png" />
+    <None Remove="Util\Src\WhatsApp2.png" />
+    <None Remove="Util\Src\WhatsApp3.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Util\Src\Atualizar.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Util\Src\Atualizar2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Include="Util\Src\Falta.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Util\Src\Possui.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Util\Src\Sair.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Util\Src\Sair2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Util\Src\WhatsApp.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Util\Src\WhatsApp2.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>
@@ -26,6 +52,12 @@
     <PackageReference Include="Xamarin.Forms" Version="4.8.0.1534" />
     <PackageReference Include="Xamarin.Essentials" Version="1.5.3.2" />
     <PackageReference Include="Xamarin.Forms.OpenWhatsApp" Version="1.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Util\Src\Whats.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
   <ItemGroup>

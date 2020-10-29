@@ -15,12 +15,8 @@ namespace PC2_App.Pages
     {
         public LoginPage()
         {
-            var vm = new LoginViewModel();
+            var vm = new LoginViewModel(this.Navigation);
             this.BindingContext = vm;
-
-            vm.ExibirAvisoDeLoginInvalido += () => DisplayAlert("Erro", "Login Inválido, tente novamente", "OK");
-            vm.NavegarParaPaginaPrincipal += () => Navigation.InsertPageBefore(new MainPage(), this);
-            vm.NavegarParaPaginaPrincipal += async () => await Navigation.PopAsync();
 
             InitializeComponent();
             CPF.Completed += (object sender, EventArgs e) =>

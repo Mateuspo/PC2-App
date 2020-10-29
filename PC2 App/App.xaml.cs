@@ -1,7 +1,5 @@
-﻿using PC2_App.Models;
-using System;
+﻿using PC2_App.Pages;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace PC2_App
 {
@@ -16,7 +14,7 @@ namespace PC2_App
 
             if (!UsuarioLogado)
             {
-                MainPage = new NavigationPage(new Pages.LoginPage());
+                MainPage = new NavigationPage(new LoginPage());
             }
             else
             {

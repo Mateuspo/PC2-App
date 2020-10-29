@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace PC2_App.Models
+﻿namespace PC2_App.Models
 {
     public class Usuarios
     {
@@ -13,5 +9,14 @@ namespace PC2_App.Models
         public string SUS { get; set; }
         public string Email { get; set; }
         public string Telefone { get; set; }
+
+        public string TelefoneFormatado
+        {
+            get
+            {
+                return string.Format("{0:(00) 0 0000-0000}", long.Parse(Telefone));
+            }
+
+        }
     }
 }

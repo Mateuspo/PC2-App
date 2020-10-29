@@ -1,18 +1,17 @@
-﻿using PC2_App.Pages;
-using PC2_App.ViewModels;
+﻿using PC2_App.ViewModels;
 using System.ComponentModel;
 using Xamarin.Forms;
 
-namespace PC2_App
+namespace PC2_App.Pages
 {
     // Learn more about making custom code visible in the Xamarin.Forms previewer
     // by visiting https://aka.ms/xamarinforms-previewer
     [DesignTimeVisible(false)]
-    public partial class ContatoPage : ContentPage
+    public partial class MainPage : ContentPage
     {
-        public ContatoPage()
+        public MainPage()
         {
-            var vm = new ContatoPageViewModel(this.Navigation);            
+            var vm = new MainPageViewModel(this.Navigation);
             this.BindingContext = vm;
 
             InitializeComponent();

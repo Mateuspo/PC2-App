@@ -11,38 +11,37 @@
 
     <ContentPage.Content>
         <StackLayout Spacing="0">
-            <RefreshView IsRefreshing="{Binding Atualizando}"
-             Command="{Binding RefreshCommand}">
-                <ListView ItemsSource="{Binding usuarios}"
+            <ListView ItemsSource="{Binding usuarios}" SelectionMode="None"
                       Margin="{OnIdiom Default='16, 32, 16, 0', Tablet='0, 0, 0, 0'}">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <ViewCell>
-                                <Grid RowSpacing="5">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="40"/>
-                                    </Grid.RowDefinitions>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="2*"></ColumnDefinition>
-                                        <ColumnDefinition Width="*"></ColumnDefinition>
-                                    </Grid.ColumnDefinitions>
-                                    <Label Text="{Binding Telefone}" Grid.Column="0" VerticalOptions="Center"/>
-                                    <Button Text="Contatar" Grid.Column="1" HeightRequest="36"
-                                        VerticalOptions="Center"
-                                        Command="{Binding BindingContext.SolicitarButtonPressCommand, Source={x:Reference Contatos}}" 
-                                        CommandParameter="{Binding Id}"/>                                    
-                                </Grid>
-                            </ViewCell>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                    <ListView.Footer>
-                        <ContentView>
-                            <BoxView Color="Transparent" 
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid RowSpacing="5">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="40"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="2*"></ColumnDefinition>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Label Text="{Binding TelefoneFormatado}" Grid.Column="0" VerticalOptions="Center" FontSize="Medium"/>
+                                <ImageButton Source="{b:ImageResource PC2_App.Util.Src.WhatsApp.png}"
+                                    Grid.Column="1" HeightRequest="36"
+                                    HorizontalOptions="End"
+                                    VerticalOptions="End"
+                                    Command="{Binding Source={x:Reference Contatos}, Path=BindingContext.SolicitarButtonPressCommand}"
+                                    CommandParameter="{Binding Id}"/>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                <ListView.Footer>
+                    <ContentView>
+                        <BoxView Color="Transparent" 
                                  HeightRequest="4"/>
-                        </ContentView>
-                    </ListView.Footer>
-                </ListView>
-            </RefreshView>
+                    </ContentView>
+                </ListView.Footer>
+            </ListView>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

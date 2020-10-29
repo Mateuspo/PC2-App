@@ -7,6 +7,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.OpenWhatsApp;
 
@@ -14,15 +15,30 @@ namespace PC2_App.ViewModels
 {
     public class ContatoPageViewModel : INotifyPropertyChanged
     {
+        private INavigation navigation;
+
+        public INavigation GetNavigation()
+        {
+            return navigation;
+        }
+
+        public void SetNavigation(INavigation value)
+        {
+            navigation = value;
+        }
+
         private bool atualizando;
 
         public event PropertyChangedEventHandler PropertyChanged = delegate { };
-        public Action ExibirAviso;
-        public Action ExibirSucesso;
-        public Action NavegarParaPaginaInicial;
         public ICommand SolicitarButtonPressCommand => new Command<int>(SolicitarButtonPress);
         public ICommand RefreshCommand => new Command(Refresh);
         public List<Usuarios> usuarios { get; set; }
+
+        public ContatoPageViewModel(INavigation navigation)
+        {
+            this.SetNavigation(navigation);
+            Carregar();
+        }
 
         protected void RaisePropertyChanged([CallerMemberName] string propertyName = "")
         {
@@ -44,11 +60,6 @@ namespace PC2_App.ViewModels
             Carregar();
         }
 
-        public ContatoPageViewModel()
-        {
-            Carregar();
-        }
-
         private async void Carregar()
         {
             Atualizando = true;
@@ -58,9 +69,9 @@ namespace PC2_App.ViewModels
 
         private async Task CarregaValores()
         {
-            var idMedicamento = Application.Current.Properties["idMedicamento"] as int?;
+            var medicamento = Application.Current.Properties["Medicamento"] as Medicamentos;
             var usuario = Application.Current.Properties["Usuario"] as Usuarios;
-            var url = $"http://192.168.1.106/web_api/API/PC2/Usuarios?porMedicamentos={idMedicamento.Value.ToString()}&codUsuario={usuario.Id}";
+            var url = $"http://192.168.1.106/web_api/API/PC2/Usuarios?porMedicamentos={medicamento.Id}&codUsuario={usuario.Id}";
 
             var provider = new RequestProvider();
             try
@@ -72,15 +83,44 @@ namespace PC2_App.ViewModels
                     RaisePropertyChanged(nameof(usuarios));
                 }
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
-                ExibirAviso();
+                ExibirAviso(ex.Message);
             }
         }
-        private void SolicitarButtonPress(int idUsuario)
+
+        private async void ExibirAviso(string erro)
+        {
+            await this.navigation.NavigationStack[1].DisplayAlert("Erro", erro, "OK");
+        }
+
+        private async void SolicitarButtonPress(int idUsuario)
         {
             var usuario = usuarios.Where(x => x.Id == idUsuario).FirstOrDefault();
-            Chat.Open("+55" + usuario.Telefone, "Olá, vim através do APP de consulta de medicamentos e tenho disponível o medicamento que você solicitou.");
-        }        
+            var medicamento = Application.Current.Properties["Medicamento"] as Medicamentos;
+
+            try
+            {
+                throw new Exception();
+                Chat.Open("+55" + usuario.Telefone, "Olá, vim através do APP de consulta de medicamentos e tenho disponível o medicamento *" + medicamento.Descricao + "* que você solicitou.");
+            }
+            catch (Exception)
+            {
+                var Acao = "";
+
+                if (Device.RuntimePlatform == Device.Android)
+                    Acao = "Ligar";
+                else
+                    Acao = "E-mail";
+
+                if (await this.navigation.NavigationStack[1].DisplayAlert("Erro", "Não possivel abrir o WhatsApp.", Acao, "Cancelar"))
+                {
+                    if (Acao.Equals("Ligar"))
+                        PhoneDialer.Open(usuario.Telefone);
+                    else
+                        await Email.ComposeAsync("Doação de Medicamento.", "Olá, vim através do APP de consulta de medicamentos e tenho disponível o medicamento " + medicamento.Descricao + " que você solicitou.", new string[] { usuario.Email });
+                }
+            }
+        }
     }
 }

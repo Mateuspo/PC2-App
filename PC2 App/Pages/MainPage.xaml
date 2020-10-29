@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             Title="Listagem de Medicamentos"
+             x:Class="PC2_App.Pages.MainPage"
+             x:Name="ListagemMedicamentos"
+             xmlns:b="clr-namespace:PC2_App.Util">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Order="Primary"
+                     Text="Atualizar"
+                     Priority="0" 
+                     IconImageSource="{b:ImageResource PC2_App.Util.Src.Atualizar.png}"
+                     Command="{Binding RefreshCommand}"/>
+        <ToolbarItem Order="Primary"
+                     Text="Sair"
+                     Priority="1"
+                     IconImageSource="{b:ImageResource PC2_App.Util.Src.Sair.png}"
+                     Command="{Binding SairCommand}"/>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <StackLayout Spacing="0">
+            <Entry Text="{Binding SearchTerm}"
+                   Placeholder="Pesquisar Medicamento"
+                   Margin="{OnIdiom Default='16, 16, 16, 0', Tablet='32, 16, 32, 0'}">
+                <Entry.Behaviors>
+                    <b:EventToCommandBehavior EventName="TextChanged"
+                                              EventArgsParameterPath="NewTextValue"
+                                              Command="{Binding SearchTermChangedCommand}"/>
+                </Entry.Behaviors>
+            </Entry>
+            <ListView ItemsSource="{Binding medicamentos}" SelectionMode="None" IsPullToRefreshEnabled="True"
+                      IsRefreshing="{Binding Atualizando}" RefreshCommand="{Binding RefreshCommand}"
+                      Margin="{OnIdiom Default='16, 32, 16, 0', Tablet='0, 0, 0, 0'}" HasUnevenRows="True">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid RowSpacing="5">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="2*"></ColumnDefinition>
+                                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Label Text="{Binding Exibicao}" Grid.Column="0" VerticalOptions="Center" FontSize="Medium"/>
+                                <Button Text="Solicitar" Grid.Column="1" HeightRequest="36"
+                                                VerticalOptions="Center"
+                                                HorizontalOptions="End"
+                                                IsVisible="{Binding NaoSolicitado}"
+                                                Command="{Binding Source={x:Reference ListagemMedicamentos}, Path=BindingContext.SolicitarButtonPressCommand}"
+                                                CommandParameter="{Binding Id}"/>
+                                <Button Text="Doar" Grid.Column="2"  HeightRequest="36"
+                                                VerticalOptions="Center"
+                                                HorizontalOptions="End"
+                                                IsVisible="{Binding PossuiRequisicao}"
+                                                Command="{Binding Source={x:Reference ListagemMedicamentos}, Path=BindingContext.DoarButtonPressCommand}"
+                                                CommandParameter="{Binding Id}"/>
+                                <Image Source="{b:ImageResource PC2_App.Util.Src.Falta.png}" 
+                                               HeightRequest="30" 
+                                               Grid.Column="3" 
+                                               VerticalOptions="Center" 
+                                               HorizontalOptions="End" 
+                                               IsVisible="{Binding NaoPossuiEstoque}"/>
+                                <Image Source="{b:ImageResource PC2_App.Util.Src.Possui.png}" 
+                                               HeightRequest="30" 
+                                               Grid.Column="3" 
+                                               VerticalOptions="Center" 
+                                               HorizontalOptions="End" 
+                                               IsVisible="{Binding PossuiEstoque}"/>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                <ListView.Footer>
+                    <ContentView>
+                        <BoxView Color="Transparent" 
+                                 HeightRequest="4"/>
+                    </ContentView>
+                </ListView.Footer>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

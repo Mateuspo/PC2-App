@@ -1,4 +1,5 @@
 ﻿using PC2_App.Models;
+using PC2_App.Pages;
 using PC2_App.Util;
 using System;
 using System.ComponentModel;
@@ -10,8 +11,18 @@ namespace PC2_App.ViewModels
 {
     public class LoginViewModel : INotifyPropertyChanged
     {
-        public Action ExibirAvisoDeLoginInvalido;
-        public Action NavegarParaPaginaPrincipal;
+        private INavigation navigation;
+
+        public INavigation GetNavigation()
+        {
+            return navigation;
+        }
+
+        public void SetNavigation(INavigation value)
+        {
+            navigation = value;
+        }
+
         public event PropertyChangedEventHandler PropertyChanged = delegate { };
         private const string _URL = "http://192.168.1.106/web_api/API/PC2/Login";
         private string _CPF;
@@ -35,14 +46,16 @@ namespace PC2_App.ViewModels
             }
         }
         public ICommand SubmitCommand { protected set; get; }
-        public LoginViewModel()
+        public LoginViewModel(INavigation navigation)
         {
+            this.SetNavigation(navigation);
             SubmitCommand = new Command(OnSubmit);
 #if DEBUG
             CPF = "02633440029";
             SUS = "123";
 #endif
         }
+
         public async void OnSubmit()
         {
             var provider = new RequestProvider();
@@ -67,6 +80,17 @@ namespace PC2_App.ViewModels
 
                 ExibirAvisoDeLoginInvalido();
             }
+        }
+
+        private void ExibirAvisoDeLoginInvalido()
+        {
+            this.navigation.NavigationStack[0].DisplayAlert("Erro", "Login Inválido, tente novamente", "OK");
+        }
+
+        private async Task NavegarParaPaginaPrincipal()
+        {            
+            this.navigation.InsertPageBefore(new MainPage(), this.navigation.NavigationStack[0]);
+            await navigation.PopAsync();
         }
     }
 }
