@@ -43,6 +43,11 @@ namespace PC2_App.ViewModels
             Carregar();
         }
 
+        protected void RaisePropertyChanged([CallerMemberName] string propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
 
         public bool Atualizando
         {
@@ -50,13 +55,8 @@ namespace PC2_App.ViewModels
             set
             {
                 atualizando = value;
-                RaisePropertyChanged(nameof(Atualizando));
+                RaisePropertyChanged(nameof(atualizando));
             }
-        }
-
-        protected void RaisePropertyChanged([CallerMemberName] string propertyName = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         private void SearchTermChanged(string obj)
@@ -102,7 +102,7 @@ namespace PC2_App.ViewModels
         private async Task CarregaValores()
         {
             var usuario = Application.Current.Properties["Usuario"] as Usuarios;
-            var url = $"http://192.168.1.106/web_api/API/PC2/Medicamentos?porDisponibilidade=false&codUsuario={usuario.Id}";
+            var url = $"http://mateuspoliveira-001-site1.atempurl.com/API/PC2/Medicamentos?porDisponibilidade=false&codUsuario={usuario.Id}";
 
             var provider = new RequestProvider();
             try
@@ -130,7 +130,7 @@ namespace PC2_App.ViewModels
 
         private async Task SolicitarDados(int idMedicamento)
         {
-            string _URL = "http://192.168.1.106/web_api/API/PC2/RequisicaoAjuda";
+            string _URL = "http://mateuspoliveira-001-site1.atempurl.com/API/PC2/RequisicaoAjuda";
             var provider = new RequestProvider();
             var usuario = Application.Current.Properties["Usuario"] as Usuarios;
             var Dados = new { UsuarioId = usuario.Id, MedicamentoId = idMedicamento, DataRequisicao = DateTime.Now };

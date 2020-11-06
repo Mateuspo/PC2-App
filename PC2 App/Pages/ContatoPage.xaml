@@ -4,7 +4,7 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             Title="Listagem de Contatos"
+             Title="Doar Medicamentos"
              x:Class="PC2_App.ContatoPage"
              x:Name="Contatos"
              xmlns:b="clr-namespace:PC2_App.Util">
@@ -24,7 +24,7 @@
                                     <ColumnDefinition Width="2*"></ColumnDefinition>
                                     <ColumnDefinition Width="*"></ColumnDefinition>
                                 </Grid.ColumnDefinitions>
-                                <Label Text="{Binding TelefoneFormatado}" Grid.Column="0" VerticalOptions="Center" FontSize="Medium"/>
+                                <Label Text="{Binding TelefoneFormatado}" Grid.Column="0" VerticalOptions="Center" FontSize="Medium" TextColor="Black"/>
                                 <ImageButton Source="{b:ImageResource PC2_App.Util.Src.WhatsApp.png}"
                                     Grid.Column="1" HeightRequest="36"
                                     HorizontalOptions="End"

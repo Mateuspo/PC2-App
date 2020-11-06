@@ -2,13 +2,13 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PC2_App.Pages.LoginPage"
-             Title="Login"
+             Title="Disponibilidade de Medicamentos"
              BackgroundImage="logo.jpg">
     <ContentPage.Content>
         <StackLayout Orientation="Vertical" Padding="30" Spacing="40">
             <BoxView HeightRequest="10"/>
             <Image HorizontalOptions="Center" WidthRequest="300" Source="maco.jpg"/>
-            <Frame BackgroundColor="#BF043055" HasShadow="False">
+            <Frame BackgroundColor="DimGray" HasShadow="False">
                 <StackLayout Orientation="Vertical" Spacing="10">
                     <Entry x:Name="CPF" Text="{Binding CPF}" Placeholder="CPF" 
                            PlaceholderColor="Black" HeightRequest="40" 
@@ -23,9 +23,9 @@
                            TextColor="Black"/>
                 </StackLayout>
             </Frame>
-            <Button Command="{Binding SubmitCommand}" Text="Entrar" TextColor="White"
+            <Button Command="{Binding SubmitCommand}" Text="Entrar" TextColor="Black"
                     FontAttributes="Bold" FontSize="Medium" HorizontalOptions="FillAndExpand"
-                    BackgroundColor="#088da5" />
+                    BackgroundColor="DimGray" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

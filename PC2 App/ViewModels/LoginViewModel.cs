@@ -24,7 +24,7 @@ namespace PC2_App.ViewModels
         }
 
         public event PropertyChangedEventHandler PropertyChanged = delegate { };
-        private const string _URL = "http://192.168.1.106/web_api/API/PC2/Login";
+        private const string _URL = "http://mateuspoliveira-001-site1.atempurl.com/API/PC2/Login";
         private string _CPF;
         public string CPF
         {

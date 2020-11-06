@@ -44,13 +44,22 @@ namespace PC2_App.Util
             using (var httpClient = CreateHttpClient(token, timeout))
             {
                 var content = new StringContent(JsonConvert.SerializeObject(data), _encoding);
+                string serialized = string.Empty;
                 content.Headers.ContentType = new MediaTypeHeaderValue(_mediaType);
-                
-                var response = await httpClient.PostAsync(uri, content).ConfigureAwait(continueOnCapturedContext: false);
-                
-                await HandleResponse(response).ConfigureAwait(continueOnCapturedContext: false);
-                
-                string serialized = await response.Content.ReadAsStringAsync().ConfigureAwait(continueOnCapturedContext: false);
+                try
+                {
+                    var response = await httpClient.PostAsync(uri, content).ConfigureAwait(continueOnCapturedContext: false);
+
+                    await HandleResponse(response).ConfigureAwait(continueOnCapturedContext: false);
+
+                    serialized = await response.Content.ReadAsStringAsync().ConfigureAwait(continueOnCapturedContext: false);
+
+                }
+                catch (Exception ex)
+                {
+                    serialized = string.Empty;
+                }
+
                 var responseLegal = await Task.Run(() => JsonConvert.DeserializeObject<Response>(serialized)).ConfigureAwait(continueOnCapturedContext: false);
 
                 TResult result = JsonConvert.DeserializeObject<TResult>(responseLegal.model.ToString());

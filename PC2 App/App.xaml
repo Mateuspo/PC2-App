@@ -6,6 +6,9 @@
              mc:Ignorable="d"
              x:Class="PC2_App.App">
     <Application.Resources>
-
+        <Style TargetType="NavigationPage">
+            <Setter Property="BarBackgroundColor" Value="LightGray"/>
+            <Setter Property="BarTextColor" Value="Black"/>
+        </Style>
     </Application.Resources>
 </Application>

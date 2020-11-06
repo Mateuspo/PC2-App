@@ -71,7 +71,7 @@ namespace PC2_App.ViewModels
         {
             var medicamento = Application.Current.Properties["Medicamento"] as Medicamentos;
             var usuario = Application.Current.Properties["Usuario"] as Usuarios;
-            var url = $"http://192.168.1.106/web_api/API/PC2/Usuarios?porMedicamentos={medicamento.Id}&codUsuario={usuario.Id}";
+            var url = $"http://mateuspoliveira-001-site1.atempurl.com/API/PC2/Usuarios?porMedicamentos={medicamento.Id}&codUsuario={usuario.Id}";
 
             var provider = new RequestProvider();
             try
@@ -101,8 +101,7 @@ namespace PC2_App.ViewModels
 
             try
             {
-                throw new Exception();
-                Chat.Open("+55" + usuario.Telefone, "Olá, vim através do APP de consulta de medicamentos e tenho disponível o medicamento *" + medicamento.Descricao + "* que você solicitou.");
+                Chat.Open("+55" + usuario.Telefone, "Olá, vim através do APP de consulta de medicamentos e tenho disponível o medicamento _*" + medicamento.Descricao + "*_ que você solicitou.");
             }
             catch (Exception)
             {
