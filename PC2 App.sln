@@ -3,22 +3,22 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29324.140
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PC2_App.UWP", "PC2 App.UWP\PC2_App.UWP.csproj", "{846E06D2-6427-41F0-9B80-BB8FDEA3954F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PC2_App.UWP", "PC2_App.UWP\PC2_App.UWP.csproj", "{846E06D2-6427-41F0-9B80-BB8FDEA3954F}"
 	ProjectSection(ProjectDependencies) = postProject
 		{9E0388C7-0675-4658-889E-76978C02FE03} = {9E0388C7-0675-4658-889E-76978C02FE03}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PC2_App.Android", "PC2 App.Android\PC2_App.Android.csproj", "{AE936760-65C3-408A-92C8-736825C94CE6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PC2_App.Android", "PC2_App.Android\PC2_App.Android.csproj", "{AE936760-65C3-408A-92C8-736825C94CE6}"
 	ProjectSection(ProjectDependencies) = postProject
 		{9E0388C7-0675-4658-889E-76978C02FE03} = {9E0388C7-0675-4658-889E-76978C02FE03}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PC2_App.iOS", "PC2 App.iOS\PC2_App.iOS.csproj", "{528C14AB-6080-4536-9589-1FDF09BB7453}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PC2_App.iOS", "PC2_App.iOS\PC2_App.iOS.csproj", "{528C14AB-6080-4536-9589-1FDF09BB7453}"
 	ProjectSection(ProjectDependencies) = postProject
 		{9E0388C7-0675-4658-889E-76978C02FE03} = {9E0388C7-0675-4658-889E-76978C02FE03}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PC2_App", "PC2 App\PC2_App.csproj", "{9E0388C7-0675-4658-889E-76978C02FE03}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PC2_App", "PC2_App\PC2_App.csproj", "{9E0388C7-0675-4658-889E-76978C02FE03}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

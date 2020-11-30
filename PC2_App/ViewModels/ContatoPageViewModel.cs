@@ -74,18 +74,26 @@ namespace PC2_App.ViewModels
             var url = $"http://mateuspoliveira-001-site1.atempurl.com/API/PC2/Usuarios?porMedicamentos={medicamento.Id}&codUsuario={usuario.Id}";
 
             var provider = new RequestProvider();
-            try
-            {
-                usuarios = await provider.GetAsync<List<Usuarios>>(url);
 
-                if (usuarios != null)
+            if (Connectivity.NetworkAccess == NetworkAccess.Internet || Connectivity.NetworkAccess == NetworkAccess.Local)
+            {
+                try
                 {
-                    RaisePropertyChanged(nameof(usuarios));
+                    usuarios = await provider.GetAsync<List<Usuarios>>(url);
+
+                    if (usuarios != null)
+                    {
+                        RaisePropertyChanged(nameof(usuarios));
+                    }
+                }
+                catch (Exception ex)
+                {
+                    ExibirAviso(ex.Message);
                 }
             }
-            catch (Exception ex)
+            else
             {
-                ExibirAviso(ex.Message);
+                ExibirAviso("Sem conexão com a internet");
             }
         }
 

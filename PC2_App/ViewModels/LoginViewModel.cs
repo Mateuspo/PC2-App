@@ -5,6 +5,7 @@ using System;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace PC2_App.ViewModels
@@ -52,7 +53,7 @@ namespace PC2_App.ViewModels
             SubmitCommand = new Command(OnSubmit);
 #if DEBUG
             CPF = "02633440029";
-            SUS = "123";
+            SUS = "1234";
 #endif
         }
 
@@ -61,30 +62,37 @@ namespace PC2_App.ViewModels
             var provider = new RequestProvider();
             var Login = new { CPF, SUS };
 
-            try
+            if (Connectivity.NetworkAccess == NetworkAccess.Internet || Connectivity.NetworkAccess == NetworkAccess.Local)
             {
-                using (Acr.UserDialogs.UserDialogs.Instance.Loading("Realizando Login..."))
+                try
                 {
-                    Application.Current.Properties.Remove("Usuario");
-                    var entity = await provider.PostAsync<Usuarios>(_URL, Login);
-                    Application.Current.Properties.Add("Usuario", entity);
+                    using (Acr.UserDialogs.UserDialogs.Instance.Loading("Realizando Login..."))
+                    {
+                        Application.Current.Properties.Remove("Usuario");
+                        var entity = await provider.PostAsync<Usuarios>(_URL, Login);
+                        Application.Current.Properties.Add("Usuario", entity);
+                    }
+
+                    App.UsuarioLogado = true;
+                    await NavegarParaPaginaPrincipal();
                 }
+                catch (Exception ex)
+                {
+                    App.UsuarioLogado = false;
+                    await Task.Delay(100);
 
-                App.UsuarioLogado = true;
-                NavegarParaPaginaPrincipal();
+                    ExibirAvisoDeLoginInvalido("Login Inválido, tente novamente");
+                }
             }
-            catch (Exception ex)
+            else
             {
-                App.UsuarioLogado = false;
-                await Task.Delay(100);
-
-                ExibirAvisoDeLoginInvalido();
+                ExibirAvisoDeLoginInvalido("Sem conexão com a internet");
             }
         }
 
-        private void ExibirAvisoDeLoginInvalido()
+        private void ExibirAvisoDeLoginInvalido(string Mensagem)
         {
-            this.navigation.NavigationStack[0].DisplayAlert("Erro", "Login Inválido, tente novamente", "OK");
+            this.navigation.NavigationStack[0].DisplayAlert("Erro", Mensagem, "OK");
         }
 
         private async Task NavegarParaPaginaPrincipal()

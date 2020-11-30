@@ -8,6 +8,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace PC2_App.ViewModels
@@ -105,18 +106,26 @@ namespace PC2_App.ViewModels
             var url = $"http://mateuspoliveira-001-site1.atempurl.com/API/PC2/Medicamentos?porDisponibilidade=false&codUsuario={usuario.Id}";
 
             var provider = new RequestProvider();
-            try
-            {
-                medicamentosPesquisa = await provider.GetAsync<List<Medicamentos>>(url);
 
-                if (medicamentosPesquisa != null)
+            if (Connectivity.NetworkAccess == NetworkAccess.Internet || Connectivity.NetworkAccess == NetworkAccess.Local)
+            {
+                try
                 {
-                    SearchTermChanged("");
+                    medicamentosPesquisa = await provider.GetAsync<List<Medicamentos>>(url);
+
+                    if (medicamentosPesquisa != null)
+                    {
+                        SearchTermChanged("");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    await ExibirAviso(ex.Message);
                 }
             }
-            catch (Exception ex)
+            else
             {
-                await ExibirAviso(ex.Message);
+                await ExibirAviso("Sem conexão com a internet");
             }
         }
 
@@ -135,19 +144,27 @@ namespace PC2_App.ViewModels
             var usuario = Application.Current.Properties["Usuario"] as Usuarios;
             var Dados = new { UsuarioId = usuario.Id, MedicamentoId = idMedicamento, DataRequisicao = DateTime.Now };
 
-            try
+            if (Connectivity.NetworkAccess == NetworkAccess.Internet || Connectivity.NetworkAccess == NetworkAccess.Local)
             {
-                var entity = await provider.PostAsync<RequisicaoAjuda>(_URL, Dados);
 
-                if (entity != null)
+                try
                 {
-                   await ExibirSucesso();
+                    var entity = await provider.PostAsync<RequisicaoAjuda>(_URL, Dados);
+
+                    if (entity != null)
+                    {
+                        await ExibirSucesso();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    await ExibirAviso(ex.Message);
                 }
             }
-            catch (Exception ex)
+            else
             {
-                await ExibirAviso(ex.Message);
-            }            
+                await ExibirAviso("Sem conexão com a internet");
+            }
         }
 
         private async Task ExibirSucesso()

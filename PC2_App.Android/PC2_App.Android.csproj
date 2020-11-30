@@ -39,16 +39,19 @@
     <MandroidI18n />
     <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
     <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
-    <AndroidKeyStore>true</AndroidKeyStore>
-    <AndroidSigningKeyStore>C:\Users\Mateus\AppData\Local\Xamarin\Mono for Android\debug.keystore</AndroidSigningKeyStore>
-    <AndroidSigningStorePass>ren9ve</AndroidSigningStorePass>
+    <AndroidKeyStore>false</AndroidKeyStore>
+    <AndroidSigningKeyStore>
+    </AndroidSigningKeyStore>
+    <AndroidSigningStorePass>
+    </AndroidSigningStorePass>
     <AndroidPackageFormat>apk</AndroidPackageFormat>
     <AndroidLinkTool>r8</AndroidLinkTool>
     <AndroidSigningKeyAlias>
     </AndroidSigningKeyAlias>
     <AndroidSigningKeyPass>
     </AndroidSigningKeyPass>
-    <AndroidApkSignerAdditionalArguments>PC2 APP</AndroidApkSignerAdditionalArguments>
+    <AndroidApkSignerAdditionalArguments>
+    </AndroidApkSignerAdditionalArguments>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -159,10 +162,15 @@
     <Folder Include="Resources\drawable\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\PC2 App\PC2_App.csproj">
+    <ProjectReference Include="..\PC2_App\PC2_App.csproj">
       <Project>{9e0388c7-0675-4658-889e-76978c02fe03}</Project>
       <Name>PC2_App</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties TriggeredFromHotReload="False" />
+    </VisualStudio>
+  </ProjectExtensions>
 </Project>
