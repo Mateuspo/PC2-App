@@ -17,6 +17,8 @@ namespace PC2_App.ViewModels
     {
         private INavigation navigation;
 
+
+        private const string _URL = "http://mateuspoliveira-001-site1.atempurl.com/API/";
         public INavigation GetNavigation()
         {
             return navigation;
@@ -71,7 +73,7 @@ namespace PC2_App.ViewModels
         {
             var medicamento = Application.Current.Properties["Medicamento"] as Medicamentos;
             var usuario = Application.Current.Properties["Usuario"] as Usuarios;
-            var url = $"http://mateuspoliveira-001-site1.atempurl.com/API/PC2/Usuarios?porMedicamentos={medicamento.Id}&codUsuario={usuario.Id}";
+            var url = _URL + $"Usuario/Usuarios?porMedicamentos={medicamento.Id}&codUsuario={usuario.Id}";
 
             var provider = new RequestProvider();
 

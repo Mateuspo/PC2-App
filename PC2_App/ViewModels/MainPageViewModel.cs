@@ -27,6 +27,8 @@ namespace PC2_App.ViewModels
             navigation = value;
         }
 
+        private const string _URL = "http://mateuspoliveira-001-site1.atempurl.com/API/";
+
         private bool atualizando;
 
         public event PropertyChangedEventHandler PropertyChanged = delegate { };
@@ -103,7 +105,7 @@ namespace PC2_App.ViewModels
         private async Task CarregaValores()
         {
             var usuario = Application.Current.Properties["Usuario"] as Usuarios;
-            var url = $"http://mateuspoliveira-001-site1.atempurl.com/API/PC2/Medicamentos?porDisponibilidade=false&codUsuario={usuario.Id}";
+            var url = _URL + $"Medicamento/Medicamentos?porDisponibilidade=false&codUsuario={usuario.Id}";
 
             var provider = new RequestProvider();
 
@@ -139,7 +141,7 @@ namespace PC2_App.ViewModels
 
         private async Task SolicitarDados(int idMedicamento)
         {
-            string _URL = "http://mateuspoliveira-001-site1.atempurl.com/API/PC2/RequisicaoAjuda";
+            string url = _URL + "RequisicaoAjuda/RequisicaoAjuda";
             var provider = new RequestProvider();
             var usuario = Application.Current.Properties["Usuario"] as Usuarios;
             var Dados = new { UsuarioId = usuario.Id, MedicamentoId = idMedicamento, DataRequisicao = DateTime.Now };
@@ -149,7 +151,7 @@ namespace PC2_App.ViewModels
 
                 try
                 {
-                    var entity = await provider.PostAsync<RequisicaoAjuda>(_URL, Dados);
+                    var entity = await provider.PostAsync<RequisicaoAjuda>(url, Dados);
 
                     if (entity != null)
                     {
